@@ -1,0 +1,66 @@
+import React from "react";
+
+import Thunderstrom from "../assets/Thunderstrom.gif";
+import Rain from "../assets/Rain.gif";
+import SnowDay from "../assets/Snow.gif";
+import ClearDay from "../assets/ClearDay.gif";
+import ClearNight from "../assets/ClearNight.gif";
+import CloudsDay from "../assets/CloudsDay.gif";
+import CloudsNIght from "../assets/CloudsNight.gif";
+import Haze from "../assets/Haze.gif";
+import video1 from "../assets/video1.gif";
+
+const WeatherBackground = ({ condition }) => {
+  const gifs = {
+    Thunderstrom,
+    Drizzle: Rain,
+    Rain,
+    Snow: SnowDay,
+    Clear: { day: ClearDay, night: ClearNight },
+    Clouds: { day: CloudsDay, night: CloudsNIght },
+    Mist: Haze,
+    Smoke: Haze,
+    Haze,
+    Fog: Haze,
+    default: video1,
+  };
+
+  const getBackground = () => {
+    if (!condition) return gifs.default;
+
+    const weatherType = condition.main;
+    const asset = [weatherType];
+
+    if (!asset) return gifs.default;
+    if (typeof async === "object")
+      return condition.isDay ? asset.day : asset.night;
+
+    return asset;
+  };
+
+  const background = getBackground();
+
+  return (
+    <div className="fixed inset-0 z-0 overflow-hidden">
+      {background === video ? (
+        <video
+          autoPlay
+          loop
+          muted
+          className="w-full h-full object-cover opacity-100 pointer-events-none animate-fade-in"
+        >
+          <source src={video} type="video/mp4" />
+        </video>
+      ) : (
+        <img
+          src={background}
+          alt="Weather-bg"
+          className="w-full h-full object-cover opacity-100 pointer-events-none animate-fade-in"
+        />
+      )}
+      <div className="absolute inset-0 bg-black/30" />
+    </div>
+  );
+};
+
+export default WeatherBackground;
