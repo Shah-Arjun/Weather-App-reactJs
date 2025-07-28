@@ -1,6 +1,6 @@
 import React from "react";
 
-import Thunderstrom from "../assets/Thunderstrom.gif";
+import Thunderstorm from "../assets/Thunderstorm.gif";
 import Rain from "../assets/Rain.gif";
 import SnowDay from "../assets/Snow.gif";
 import ClearDay from "../assets/ClearDay.gif";
@@ -8,11 +8,11 @@ import ClearNight from "../assets/ClearNight.gif";
 import CloudsDay from "../assets/CloudsDay.gif";
 import CloudsNIght from "../assets/CloudsNight.gif";
 import Haze from "../assets/Haze.gif";
-import video1 from "../assets/video1.gif";
+import video1 from "../assets/video1.mp4";
 
 const WeatherBackground = ({ condition }) => {
   const gifs = {
-    Thunderstrom,
+    Thunderstorm,
     Drizzle: Rain,
     Rain,
     Snow: SnowDay,
@@ -42,14 +42,14 @@ const WeatherBackground = ({ condition }) => {
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden">
-      {background === video ? (
+      {background === video1 ? (
         <video
           autoPlay
           loop
           muted
           className="w-full h-full object-cover opacity-100 pointer-events-none animate-fade-in"
         >
-          <source src={video} type="video/mp4" />
+          <source src={video1} type="video1/mp4" />
         </video>
       ) : (
         <img
