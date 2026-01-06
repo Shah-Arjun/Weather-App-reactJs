@@ -6,7 +6,7 @@ import SnowDay from "../assets/Snow.gif";
 import ClearDay from "../assets/ClearDay.gif";
 import ClearNight from "../assets/ClearNight.gif";
 import CloudsDay from "../assets/CloudsDay.gif";
-import CloudsNIght from "../assets/CloudsNight.gif";
+import CloudsNight from "../assets/CloudsNight.gif";
 import Haze from "../assets/Haze.gif";
 import video1 from "../assets/video1.mp4";
 
@@ -17,7 +17,7 @@ const WeatherBackground = ({ condition }) => {
     Rain,
     Snow: SnowDay,
     Clear: { day: ClearDay, night: ClearNight },
-    Clouds: { day: CloudsDay, night: CloudsNIght },
+    Clouds: { day: CloudsDay, night: CloudsNight },
     Mist: Haze,
     Smoke: Haze,
     Haze,
@@ -29,35 +29,40 @@ const WeatherBackground = ({ condition }) => {
     if (!condition) return gifs.default;
 
     const weatherType = condition.main;
-    const asset = [weatherType];
+    const asset = gifs[weatherType] || gifs.default;
 
-    if (!asset) return gifs.default;
-    if (typeof async === "object")
+    // Day / Night assets
+    if (typeof asset === "object") {
       return condition.isDay ? asset.day : asset.night;
+    }
 
     return asset;
   };
 
   const background = getBackground();
+  const isVideo = background === video1;
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden">
-      {background === video1 ? (
+      {isVideo ? (
         <video
           autoPlay
           loop
           muted
-          className="w-full h-full object-cover opacity-100 pointer-events-none animate-fade-in"
+          playsInline
+          className="w-full h-full object-cover pointer-events-none animate-fade-in"
         >
-          <source src={video1} type="video1/mp4" />
+          <source src={video1} type="video/mp4" />
         </video>
       ) : (
         <img
           src={background}
-          alt="Weather-bg"
-          className="w-full h-full object-cover opacity-100 pointer-events-none animate-fade-in"
+          alt="Weather background"
+          className="w-full h-full object-cover pointer-events-none animate-fade-in"
         />
       )}
+
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/30" />
     </div>
   );
